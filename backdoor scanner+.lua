@@ -1,3 +1,5 @@
+print("c00lkidd214anzz serverside LOL")
+
 -- c00lkidd214anzz ServerSide Hub | Scanner + Executor
 print("c00lkidd214anzz serverside LOL")
 
@@ -63,3 +65,38 @@ ScanServer()
 for _, p in pairs(Players:GetPlayers()) do
     CreateConsoleGui(p)
 end
+-- КОНСОЛЬ ДЛЯ ЗАПУСКА СКРИПТОВ
+local function CreateConsoleGui()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+    if not player then return end
+    
+    local screen = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+    screen.Name = "C00lkiddConsole"
+    
+    local frame = Instance.new("Frame", screen)
+    frame.Size = UDim2.new(0, 300, 0, 150)
+    frame.Position = UDim2.new(0.5, -150, 0.4, 0)
+    frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+    frame.Active = true; frame.Draggable = true
+    
+    local input = Instance.new("TextBox", frame)
+    input.Size = UDim2.new(0.9, 0, 0, 40)
+    input.Position = UDim2.new(0.05, 0, 0.2, 0)
+    input.PlaceholderText = "Вставь ссылку на скрипт..."
+    
+    local btn = Instance.new("TextButton", frame)
+    btn.Size = UDim2.new(0.9, 0, 0, 40)
+    btn.Position = UDim2.new(0.05, 0, 0.6, 0)
+    btn.Text = "EXECUTE"
+    btn.BackgroundColor3 = Color3.fromRGB(0, 100, 255)
+    
+    btn.MouseButton1Click:Connect(function()
+        local url = input.Text
+        local s, e = pcall(function() loadstring(game:HttpGet(url))() end)
+        if not s then warn("Ошибка: " .. tostring(e)) end
+    end)
+end
+
+-- Запуск консоли
+CreateConsoleGui()
